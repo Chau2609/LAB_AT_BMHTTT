@@ -1,0 +1,30 @@
+BÁO CÁO BÀI TẬP THỰC HÀNH LAB 3
+
+Họ và tên: Ngô Ngọc Bảo Châu
+MSSV: 1150080044
+Lớp: K11_THMT
+Tên bài Lab: Nhận diện và ứng phó các mối đe dọa đến an toàn thông tin
+Link video thực hành: https://youtu.be/_yWxFd9UCmk
+
+Môi trường thực hành
+• Phần mềm ảo hóa: VMware Workstation Pro 26H1
+• Hệ điều hành máy ảo: Windows 10 x64 / Windows Server 2025 Standard
+• Công cụ: Microsoft Defender Antivirus, Sysmon v15.22, Python 3.14.7, Windows PowerShell 5.1
+
+Nội dung đã thực hiện
+• TH1: Baseline hệ thống và phân loại 5 nguồn đe dọa.
+• TH2: Kiểm chứng cơ chế phát hiện mã độc bằng tệp thử nghiệm EICAR.
+• TH3: Phân tích log xác thực đăng nhập (Event ID 4624, 4625, 4648) và kiểm chứng đổi mật khẩu.
+• TH4: Nhận diện kỹ thuật Persistence và dịch vụ lắng nghe cổng loopback bằng Sysmon.
+• TH5: Bắt và phân tích luồng dữ liệu HTTP so với HTTPS bằng Wireshark.
+• TH6: Kiểm thử tải DoS cục bộ và phân tích dữ liệu DDoS, Mail Bombing.
+• TH7: Phân tích các chỉ dấu Phishing Email và phân loại các kịch bản Social Engineering.
+• Đã xóa bỏ các artefact thử nghiệm, hoàn tất cleanup và xuất bảng mã băm SHA-256.
+
+Kết quả
+• Toàn bộ 7 tình huống và quy trình cleanup đều đạt kết quả: PASS.
+• Dữ liệu bằng chứng được xác thực toàn vẹn bằng SHA-256 qua tệp evidence_sha256.csv.
+
+Lỗi gặp phải và cách khắc phục
+• Lỗi khóa file Word khi đổi tên ("File in Use"): Tắt hoàn toàn tiến trình Microsoft Word trong Task Manager trước khi đổi tên file.
+• Lỗi lọc sự kiện Sysmon trong Event Viewer: Đã kiểm tra lại schema XML và cấu hình bộ lọc Filter Current Log đúng mã Event ID 1.
