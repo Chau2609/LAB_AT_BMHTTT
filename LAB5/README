@@ -15,7 +15,7 @@ BÁO CÁO THỰC HÀNH LAB 5: THIẾT LẬP MÔ HÌNH TƯỜNG LỬA pfSense
 
 2. Nội dung thực hiện trong bài Lab
  2.1. Cấu hình Firewall Rule chặn Web (HTTP/HTTPS)
-- Thiết lập luật chặn trên tab **Firewall > Rules > LAN:
+- Thiết lập luật chặn trên tab Firewall > Rules > LAN:
   - Action: Block
   - Address Family: IPv4+IPv6
   - Protocol: TCP
