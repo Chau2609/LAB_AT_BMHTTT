@@ -1,0 +1,31 @@
+BÁO CÁO THỰC HÀNH LAB 5: THIẾT LẬP MÔ HÌNH TƯỜNG LỬA pfSense
+- Họ và tên:Ngô Ngọc Bảo Châu
+- MSSV: 1150080044
+- Lớp: K11_THMT
+- Video (YouTube):https://youtu.be/XR-dKUzgDSg
+
+ 1. Môi trường triển khai
+- Phần mềm ảo hóa: VMware Workstation Pro
+- pfSense Firewall:
+  - Phiên bản: pfSense CE 2.7.2 (amd64)
+  - Card WAN: Bridged / NAT
+  - Card LAN: Custom VMnet 
+- Máy trạm khách (LAN Client): Windows 10 x64 nhận IP tự động qua DHCP từ pfSense
+- Máy chủ nội bộ (Web Server): dịch vụ HTTP (TCP port 80)
+
+2. Nội dung thực hiện trong bài Lab
+ 2.1. Cấu hình Firewall Rule chặn Web (HTTP/HTTPS)
+- Thiết lập luật chặn trên tab **Firewall > Rules > LAN:
+  - Action: Block
+  - Address Family: IPv4+IPv6
+  - Protocol: TCP
+  - Destination Port: 80 - 443
+- Đặt rule Block ở vị trí ưu tiên (trên rule Default allow LAN to any rule) theo cơ chế First-Match Win.
+- Kết quả kiểm thử: Trình duyệt Microsoft Edge trên Windows 10 truy cập web (ví dụ `neverssl.com`) bị treo quay tròn và báo lỗi `ERR_CONNECTION_TIMED_OUT`.
+2.2. Kiểm tra kết nối mạng qua CMD
+- Thực thi lệnh `ipconfig /flushdns` để xóa cache phân giải tên miền.
+- Kiểm tra lệnh `ping 8.8.8.8` để xác nhận lưu lượng trước và sau khi kích hoạt luật chặn.
+2.3. Cấu hình NAT Port Forward (Dịch vụ Web)
+- Cấu hình tại Firewall > NAT > Port Forward:
+  - Ánh xạ từ IP WAN (port 80) sang IP máy chủ web nội bộ 
+- Hệ thống tự động sinh liên kết luật cho phép (Pass rule) tương ứng trên tab Firewall > Rules > WAN.
