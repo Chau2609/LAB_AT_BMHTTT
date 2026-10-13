@@ -1,0 +1,29 @@
+LAB 6: XÁC THỰC ACTIVE DIRECTORY VÀ CHÍNH SÁCH TRUY CẬP TRÊN PFSENSE
+
+Thông tin sinh viên
+Họ và tên: Ngô Ngọc Bảo Châu
+MSSV: 1150080044
+Lớp: 11_ĐH_THMT
+
+## Tóm tắt nội dung bài Lab
+
+Bài thực hành tập trung vào việc triển khai kiến trúc mạng phân vùng an toàn và thiết lập các chính sách kiểm soát truy cập (Access Policies) trên tường lửa pfSense Community Edition:
+
+1. Kiến trúc mạng phân vùng: 
+   * Thiết lập hệ thống mạng gồm 4 interface độc lập: WAN, MGMT (192.168.56.0/24), LAN (10.6.0.0/24) và DMZ (172.16.6.0/24).
+   * Phân tách riêng biệt giữa mạng người dùng nội bộ, máy chủ dịch vụ công cộng và mạng quản trị chuyên biệt.
+
+2. Tích hợp Active Directory & Captive Portal:
+   * Cấu hình pfSense kết nối tới Domain Controller (DC01) qua giao thức LDAP (TCP/389).
+   * Triển khai Captive Portal trên phân vùng LAN để bắt buộc người dùng xác thực tài khoản miền (`sv_a`, `sv_b`) trước khi cấp quyền truy cập mạng.
+
+3. Thực thi chính sách tường lửa (Firewall Access Policies):
+   * **Quản lý đối tượng:** Sử dụng Network Aliases để gom nhóm máy trạm (`CLIENT_A`, `POLICY_CLIENTS`) và các website mô phỏng trong DMZ (`JOB_SITE`, `SOCIAL_SITE`, `RESTRICTED_SITE`, `GENERAL_SITE`).
+   * **Kiểm soát truy cập theo định danh & dịch vụ:** Chặn truy cập web tuyển dụng đối với Client-A (Kịch bản 1); cấm toàn bộ nhóm client vào website nội dung hạn chế (Kịch bản 2).
+   * **Chính sách dựa trên thời gian (Time-based Rules):** Ứng dụng Schedule (`TEST_NOW` / `LUNCH_WINDOW`) để chỉ cho phép Client-B truy cập mạng xã hội trong giờ giải lao, tự động kích hoạt rule Block ngoài khung giờ (Kịch bản 3).
+   * **Giới hạn dịch vụ (Service Filtering):** Chỉ mở cổng Web HTTP/HTTPS (`WEB_PORTS` 80, 443) trong giờ hành chính, chặn hoàn toàn giao thức ICMP/Ping và các dịch vụ khác (Kịch bản 4).
+   * **Cô lập vùng mạng (DMZ Isolation):** Cấu hình chiều khởi tạo an toàn, cho phép mạng LAN truy cập dịch vụ DMZ nhưng chặn máy chủ DMZ chủ động gửi gói tin ngược về mạng LAN (Kịch bản 5).
+
+4. **Kiểm tra trạng thái & Nhật ký hệ thống:**
+   * Sử dụng cơ chế `Reset States` để xóa bảng trạng thái phiên (State Table) khi cập nhật quy tắc.
+   * Giám sát, phân tích nhật ký gói tin bị từ chối qua System Firewall Logs để chứng minh nguyên tắc xử lý luật từ trên xuống dưới (**First-Match**).
